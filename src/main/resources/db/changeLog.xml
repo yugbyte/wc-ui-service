@@ -1,0 +1,18 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="quarkus" id="create_expense_category_table">
+      <createTable tableName="expense_category" schemaName="lookup">
+          <column name="id" defaultValue="gen_random_uuid()" type="uuid">
+              <constraints nullable="false" primaryKey="true" primaryKeyName="expense_category_pk"/>
+          </column>
+          <column name="category_name" type="text">
+              <constraints nullable="false" unique="true" uniqueConstraintName="expense_category_name_unique"/>
+          </column>
+          <column name="icon" type="varchar(255)">
+              <constraints nullable="false"/>
+          </column>
+      </createTable>
+    </changeSet>
+</databaseChangeLog>
