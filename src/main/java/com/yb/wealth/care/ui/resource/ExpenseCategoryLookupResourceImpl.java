@@ -5,7 +5,6 @@ import com.yb.wealth.care.ui.resource.dto.ExpenseCategoryBaseDto;
 import com.yb.wealth.care.ui.resource.dto.ExpenseCategoryDto;
 import com.yb.wealth.care.ui.service.ExpenseCategoryLookupService;
 import com.yb.wealth.care.ui.util.CommonUtil;
-import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.validation.Valid;
@@ -14,6 +13,7 @@ import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -26,7 +26,7 @@ public class ExpenseCategoryLookupResourceImpl implements ExpenseCategoryLookupR
     @GET
     @Path("/categories")
     @Override
-    public Multi<ExpenseCategoryDto> getExpenseCategories() {
+    public Uni<List<ExpenseCategoryDto>> getExpenseCategories() {
         return expenseCategoryLookupService.getExpenseCategories();
     }
 

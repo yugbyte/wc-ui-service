@@ -7,7 +7,6 @@ import com.yb.wealth.care.ui.repository.entity.ExpenseCategory;
 import com.yb.wealth.care.ui.resource.dto.ExpenseCategoryBaseDto;
 import com.yb.wealth.care.ui.resource.dto.ExpenseCategoryDto;
 import io.quarkus.hibernate.reactive.panache.common.WithTransaction;
-import io.smallrye.mutiny.Multi;
 import io.smallrye.mutiny.Uni;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.ws.rs.core.Response;
@@ -15,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -25,12 +25,11 @@ public class ExpenseCategoryLookupServiceImpl implements ExpenseCategoryLookupSe
     private final ExpenseCategoryMapper expenseCategoryMapper;
 
     @Override
-    public Multi<ExpenseCategoryDto> getExpenseCategories() {
+    public Uni<List<ExpenseCategoryDto>> getExpenseCategories() {
         log.info("getExpenseCategories");
         return expenseCategoryRepository.getAllCategories()
                 .onItem()
-                .transformToMulti(items -> Multi.createFrom().iterable(items))
-                .map(expenseCategoryMapper::toDto);
+                .transform(expenseCategoryMapper::toDtoList);
     }
 
     @Override
